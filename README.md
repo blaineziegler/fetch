@@ -1,1 +1,2 @@
-# fetch
+# Synopsis
+Fetch provides simple tools for executing SQL select, insert, update, delete, and arbitrary commands against a database. Handling the results of a select statement is particularly straightforward; plain Java is used rather than object-relational mapping. One of the core classes of Fetch, FetchDefaultImpl, makes extensive use of Spring's JdbcTemplate, wrapping it with a simpler API.
