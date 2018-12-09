@@ -72,14 +72,7 @@ public final class SqlQueueDefaultImpl implements SqlQueue
 		{
 			final int finalI = i;
 			String threadName = this.getClass().getSimpleName() + "_thread_" + finalI;
-			ThreadFactory threadFactory = new ThreadFactory()
-			{
-				@Override
-				public Thread newThread(Runnable r)
-				{
-					return new Thread(r, threadName);
-				}
-			};
+			ThreadFactory threadFactory = r -> new Thread(r, threadName);
 			executorService.submit(new QueueConsumerScheduler(threadName), threadFactory);
 		}
 	}
@@ -138,14 +131,7 @@ public final class SqlQueueDefaultImpl implements SqlQueue
 
 		public QueueConsumerScheduler(String parentThreadName)
 		{
-			this.threadFactory = new ThreadFactory()
-			{
-				@Override
-				public Thread newThread(Runnable r)
-				{
-					return new Thread(r, parentThreadName + "_scheduler");
-				}
-			};
+			this.threadFactory = r -> new Thread(r, parentThreadName + "_scheduler");
 		}
 
 		@Override

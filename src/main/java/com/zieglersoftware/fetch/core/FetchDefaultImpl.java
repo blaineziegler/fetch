@@ -6,7 +6,6 @@ import static com.zieglersoftware.assertions.Assertions.notNull;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -21,7 +20,6 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -60,14 +58,7 @@ public final class FetchDefaultImpl implements Fetch
 		notNull(converter, "converter");
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 		this.converter = converter;
-		selectResultExtractor = new ResultSetExtractor<SelectResult>()
-		{
-			@Override
-			public SelectResult extractData(ResultSet resultSet) throws SQLException, DataAccessException
-			{
-				return new SelectResult(resultSet, converter);
-			}
-		};
+		selectResultExtractor = resultSet -> new SelectResult(resultSet, converter);
 	}
 
 	@Override
